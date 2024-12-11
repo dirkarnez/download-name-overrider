@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+fetch(prompt())
+.then(d => d.blob())
+.then(blob => {
+      const downloadUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = downloadUrl;
+      a.download = `${new Date().getTime()}`;
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(downloadUrl);
+      setTimeout(resolve, 100);
+})
+</script>
+
+</body>
+</html>
