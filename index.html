@@ -4,7 +4,12 @@
 
 <script>
 fetch(prompt())
-.then(d => d.blob())
+.then(response => {
+if (!response.ok) {
+      throw new Error('Network response was not ok');
+}
+      return response.blob();
+})
 .then(blob => {
       const downloadUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -15,6 +20,13 @@ fetch(prompt())
       URL.revokeObjectURL(downloadUrl);
       setTimeout(resolve, 100);
 })
+.catch(error => {
+      if (error.message === 'Failed to fetch') {
+            alert('There may be a CORS issue or the server is unreachable.');
+      } else {
+            alert('Fetch error:', error);
+      }
+});
 </script>
 
 </body>
